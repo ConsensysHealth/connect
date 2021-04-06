@@ -21,6 +21,9 @@ services:
       LFH_CONNECT_ORTHANC_SERVER_URI: "http://orthanc:8042/instances"
       LFH_CONNECT_DATASTORE_BROKERS: "kafka:9092"
       LFH_CONNECT_X12_EXTERNAL_URI: "mock:x-12"
+    ports:
+      - ${LFH_CONNECT_HTTP_PORT}:${LFH_CONNECT_HTTP_PORT}
+      - ${LFH_CONNECT_MLLP_PORT}:${LFH_CONNECT_MLLP_PORT}
     depends_on:
       - "kafka"
       - "nats-server"
@@ -36,24 +39,24 @@ services:
       POSTGRES_DB: ${LFH_KONG_DATABASE}
     volumes:
       - pg_data:${LFH_PG_DATA}
-  kong:
-    image: ${LFH_KONG_IMAGE}
-    restart: always
-    networks:
-      - main
-    depends_on:
-      - postgres
-    ports:
-      - ${LFH_KONG_SSL_PORT}:${LFH_KONG_SSL_PORT}
-      - ${LFH_KONG_ADMIN_SSL_PORT}:${LFH_KONG_ADMIN_SSL_PORT}
-      - ${LFH_KONG_MLLP_PORT}:${LFH_KONG_MLLP_PORT}
-    environment:
-      KONG_DATABASE: ${LFH_KONG_DATABASE_TYPE}
-      KONG_PG_HOST: postgres
-      KONG_PG_USER: ${LFH_PG_USER}
-      KONG_PG_PASSWORD: ${LFH_PG_PASSWORD}
-      KONG_ADMIN_LISTEN: ${LFH_KONG_ADMIN_LISTEN}
-      KONG_STREAM_LISTEN: ${LFH_KONG_STREAM_LISTEN}
-      KONG_LOG_LEVEL: ${LFH_KONG_LOG_LEVEL}
+#  kong:
+#    image: ${LFH_KONG_IMAGE}
+#    restart: always
+#    networks:
+#      - main
+#    depends_on:
+#      - postgres
+#    ports:
+#      - ${LFH_KONG_SSL_PORT}:${LFH_KONG_SSL_PORT}
+#      - ${LFH_KONG_ADMIN_SSL_PORT}:${LFH_KONG_ADMIN_SSL_PORT}
+#      - ${LFH_KONG_MLLP_PORT}:${LFH_KONG_MLLP_PORT}
+#    environment:
+#      KONG_DATABASE: ${LFH_KONG_DATABASE_TYPE}
+#      KONG_PG_HOST: postgres
+#      KONG_PG_USER: ${LFH_PG_USER}
+#      KONG_PG_PASSWORD: ${LFH_PG_PASSWORD}
+#      KONG_ADMIN_LISTEN: ${LFH_KONG_ADMIN_LISTEN}
+#      KONG_STREAM_LISTEN: ${LFH_KONG_STREAM_LISTEN}
+#      KONG_LOG_LEVEL: ${LFH_KONG_LOG_LEVEL}
 volumes:
   pg_data: { }
