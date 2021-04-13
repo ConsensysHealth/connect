@@ -38,7 +38,6 @@ public class KaleidoRouteBuilder extends BaseRouteBuilder {
             .routeId(KALEIDO_ROUTE_ID)
             .setHeader("Accept", constant("application/json"))
             .setHeader(Exchange.CONTENT_TYPE, constant(ContentType.APPLICATION_JSON))
-            .setHeader("x-api-key",simple("07191d211e8f66e33db9c7717bf38853973722dba9517fb4d1"))
             .log("Routing to REST")
             //.to("https://jsonplaceholder.typicode.com/todos/1?bridgeEndpoint=true&throwExceptionOnFailure=false")
             .to("https://hun-demo.hun-dev.kaleido.cloud/api/v1/ping?bridgeEndpoint=true&throwExceptionOnFailure=false")
